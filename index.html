@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="POQIR atau akronim dari Pembuat Kode QR merupakan sebuah web yang memudahkan Anda dalam membuat kode QR tanpa iklan dan tanpa ribet.">
+    <meta name="keywords" content="POQIR, Kode QR, Generate, QR Code">
+    <meta name="author" content="Adhitya Bagus Wicaksono">
+
+    <title>POQIR - Pembuat Kode QR</title>
+
+    <link rel="shortcut icon" href="./icon/poqirIcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="header text-center">
+        <h1>POQIR</h1>
+        <h2>Pembuat Kode QR</h2>
+        <p>Sumber Pembuat Kode QR:
+            <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">Shim Sangmin</a></p>
+    </div>
+    <div class="container">
+        <div class="content text-center">
+            <h3>Mengambil Data Kode QR</h3>
+            <div class="gap">
+                <h4><label for="textQR">Masukkan Kata/Kalimat</label></h4>
+                <input type="text" id="textQR" placeholder="https://adhityabaguswicaksono.github.io/">
+            </div>
+            <div class="gap">
+                <h4><label for="fillColor">Pilih Warna Dasar Kode QR</label></h4>
+                <input type="color" name="Color Fill" id="fillColor" value="#ffffff">
+            </div>
+            <div class="gap">
+                <h4><label for="boxColor">Pilih Warna Isi Kode QR</label></h4>
+                <input type="color" name="Color Box" id="boxColor" value="#3a7bd5">
+            </div>
+            <div class="gap">
+                <h4><label for="sizeQR">Pilih Ukuran Kode QR</label></h4>
+                <div>
+                    <input type="range" name="Size" id="sizeQR" min="300" step="100" max="3000" value="300"
+                        oninput="TextSizeQR(this.value)"><br>
+                    <span id="TextSizeQR">300 x 300 px</span>
+                </div>
+            </div>
+            <div class="gap">
+                <button onclick="generateQRCode()">Buat Kode QR</button>
+            </div>
+        </div>
+
+        <div class="content text-center">
+            <h3>Hasil Pembuatan Kode QR</h3><br>
+            <div id="QRCodeContainer"></div>
+            <br>
+            <a href="" id="linkDownloadButton" download="POQIR (Pembuat Kode QR)">
+                <button id="downloadButton">Unduh Kode QR</button>
+            </a>
+        </div>
+    </div>
+    <footer class="footer text-center">
+        <p>Dibuat pada tahun 2022 oleh Adhitya Bagus Wicaksono</p>
+    </footer>
+
+    <script src="./QRCodeGenerator/qrcode.min.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
