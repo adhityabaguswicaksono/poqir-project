@@ -1,71 +1,216 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="POQIR atau akronim dari Pembuat Kode QR merupakan sebuah web yang memudahkan Anda dalam membuat kode QR tanpa iklan dan tanpa ribet." />
+		<meta
+			name="keywords"
+			content="POQIR, Kode QR, Generate, QR Code" />
+		<meta
+			name="author"
+			content="Adhitya Bagus Wicaksono" />
+		<meta
+			property="og:title"
+			content="POQIR - Pembuat Kode QR" />
+		<meta
+			property="og:description"
+			content="POQIR atau akronim dari Pembuat Kode QR merupakan sebuah web yang memudahkan Anda dalam membuat kode QR tanpa iklan dan tanpa ribet." />
+		<meta
+			property="og:url"
+			content="https://adhityabaguswicaksono.github.io/poqir-project" />
+		<meta
+			property="og:image"
+			content="https://adhityabaguswicaksono.github.io/poqir-project/icon/newPoqirIcon.png" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="POQIR atau akronim dari Pembuat Kode QR merupakan sebuah web yang memudahkan Anda dalam membuat kode QR tanpa iklan dan tanpa ribet.">
-    <meta name="keywords" content="POQIR, Kode QR, Generate, QR Code">
-    <meta name="author" content="Adhitya Bagus Wicaksono">
+		<title>POQIR - Pembuat Kode QR</title>
 
-    <title>POQIR - Pembuat Kode QR</title>
+		<link
+			rel="shortcut icon"
+			href="./icon/newPoqirIcon.png"
+			type="image/x-icon" />
 
-    <link rel="shortcut icon" href="./icon/poqirIcon.png" type="image/x-icon">
-    <link rel="stylesheet" href="./css/style.css">
-</head>
+		<!-- CDN TailwindCSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
 
-<body>
-    <div class="header text-center">
-        <h1>POQIR</h1>
-        <h2>Pembuat Kode QR</h2>
-        <p>Sumber Pembuat Kode QR:
-            <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">Shim Sangmin</a></p>
-    </div>
-    <div class="container">
-        <div class="content text-center">
-            <h3>Mengambil Data Kode QR</h3>
-            <div class="gap">
-                <h4><label for="textQR">Masukkan Kata/Kalimat</label></h4>
-                <input type="text" id="textQR" placeholder="https://adhityabaguswicaksono.github.io/">
-            </div>
-            <div class="gap">
-                <h4><label for="fillColor">Pilih Warna Dasar Kode QR</label></h4>
-                <input type="color" name="Color Fill" id="fillColor" value="#ffffff">
-            </div>
-            <div class="gap">
-                <h4><label for="boxColor">Pilih Warna Isi Kode QR</label></h4>
-                <input type="color" name="Color Box" id="boxColor" value="#3a7bd5">
-            </div>
-            <div class="gap">
-                <h4><label for="sizeQR">Pilih Ukuran Kode QR</label></h4>
-                <div>
-                    <input type="range" name="Size" id="sizeQR" min="300" step="100" max="3000" value="300"
-                        oninput="TextSizeQR(this.value)"><br>
-                    <span id="TextSizeQR">300 x 300 px</span>
-                </div>
-            </div>
-            <div class="gap">
-                <button onclick="generateQRCode()">Buat Kode QR</button>
-            </div>
-        </div>
+		<!-- Styling -->
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-        <div class="content text-center">
-            <h3>Hasil Pembuatan Kode QR</h3><br>
-            <div id="QRCodeContainer"></div>
-            <br>
-            <a href="" id="linkDownloadButton" download="POQIR (Pembuat Kode QR)">
-                <button id="downloadButton">Unduh Kode QR</button>
-            </a>
-        </div>
-    </div>
-    <footer class="footer text-center">
-        <p>Dibuat pada tahun 2022 oleh Adhitya Bagus Wicaksono</p>
-    </footer>
+			@tailwind base;
+			@tailwind components;
+			@tailwind utilities;
 
-    <script src="./QRCodeGenerator/qrcode.min.js"></script>
-    <script src="./js/script.js"></script>
-</body>
+			html,
+			body {
+				font-family: 'Quicksand', sans-serif;
+			}
 
+			#QRCodeContainer {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			#QRCodeContainer canvas {
+				width: 100%;
+				max-width: 225px;
+			}
+
+			#QRCodeContainer img {
+				max-width: 225px;
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body class="p-8 bg-poqir-50">
+		<nav
+			class="w-full p-8 bg-poqir-500 rounded-lg shadow-md shadow-poqir-500/50 flex flex-col lg:flex-row items-center gap-4 justify-center">
+			<div class="flex justify-center">
+				<img
+					class="w-full max-w-[98px]"
+					src="./icon/newPoqirIcon.png"
+					alt="Logo Poqir" />
+			</div>
+			<div class="flex flex-col text-center lg:text-left">
+				<h1 class="text-white text-3xl font-bold">POQIR</h1>
+				<h2 class="text-white text-lg font-semibold">Pembuat Kode QR</h2>
+			</div>
+		</nav>
+
+		<div
+			class="mt-4 grid grid-rows-2 grid-cols-1 lg:grid-rows-1 lg:grid-cols-2 gap-4">
+			<div
+				class="flex flex-col gap-4 bg-white h-98 rounded-lg shadow-md shadow-poqir-500/50 p-8">
+				<div
+					class="bg-white w-full p-4 text-center rounded-lg shadow-md shadow-poqir-500/50">
+					<h3 class="text-poqir-500 font-bold text-2xl">Isi Data Kode QR</h3>
+				</div>
+				<div class="flex flex-col gap-y-6 my-6">
+					<div class="flex flex-col gap-y-2 text-center">
+						<h4 class="text-poqir-500 font-semibold text-md">
+							Kata/Kalimat/Tautan
+						</h4>
+						<input
+							id="textQR"
+							type="text"
+							placeholder="https://adhityabaguswicaksono.github.io"
+							class="w-full px-3 py-1 shadow-[inset_1px_1px_3px_0_#3b82f6] border border-white duration-300 focus:shadow-[inset_0px_0px_0px_0_#ffffff] focus:border-poqir-500 focus:outline-0 rounded-md" />
+					</div>
+					<div class="flex flex-col lg:flex-row w-full gap-6 text-center">
+						<div class="flex flex-col gap-y-2 text-center w-full">
+							<h4 class="text-poqir-500 font-semibold text-md">
+								Warna Dasar Kode QR
+							</h4>
+							<input
+								id="fillColor"
+								type="color"
+								value="#ffffff"
+								class="mx-auto w-8 h-8 bg-white focus:outline-0 rounded-md cursor-pointer" />
+						</div>
+						<div class="flex flex-col gap-y-2 text-center w-full">
+							<h4 class="text-poqir-500 font-semibold text-md">
+								Warna Isi Kode QR
+							</h4>
+							<input
+								id="boxColor"
+								type="color"
+								value="#3a7bd5"
+								class="mx-auto w-8 h-8 bg-white focus:outline-0 rounded-md cursor-pointer" />
+						</div>
+					</div>
+				</div>
+				<div class="flex flex-row justify-center">
+					<button
+						onclick="generateQRCode()"
+						class="py-2 px-3 text-white font-semibold bg-poqir-500 rounded-md shadow-md shadow-poqir-500/50 duration-300 hover:bg-poqir-700 hover:shadow-lg">
+						Buat Kode QR
+					</button>
+				</div>
+			</div>
+			<div
+				class="flex flex-col gap-4 bg-white h-98 rounded-lg shadow-md shadow-poqir-500/50 p-8">
+				<div
+					class="bg-white w-full p-4 text-center rounded-lg shadow-md shadow-poqir-500/50">
+					<h3 class="text-poqir-500 font-bold text-2xl">Hasil Kode QR</h3>
+				</div>
+				<div class="flex flex-col gap-y-8 my-6">
+					<div id="QRCodeContainer"></div>
+					<div class="flex flex-row justify-center">
+						<a
+							href=""
+							id="linkDownloadButton"
+							download="POQIR (Pembuat Kode QR)"
+							class="">
+							<button
+								class="py-2 px-3 text-white font-semibold bg-poqir-500 rounded-md shadow-md shadow-poqir-500/50 duration-300 hover:bg-poqir-700 hover:shadow-lg"
+								id="downloadButton">
+								Unduh Kode QR
+							</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer
+			class="mt-4 w-full p-8 bg-poqir-500 rounded-lg shadow-md shadow-poqir-500/50 flex flex-col items-center justify-center">
+			<p class="text-white text-md text-center leading-loose">
+				Dibuat Tahun 2023 oleh
+				<a
+					href="https://github.com/adhityabaguswicaksono/poqir-project"
+					target="_blank"
+					class="underline duration-300 hover:text-poqir-100"
+					>Adhitya Bagus Wicaksono</a
+				>
+			</p>
+			<p class="text-white text-md text-center leading-loose">
+				Sumber Kode QR dari
+				<a
+					href="https://github.com/davidshimjs/qrcodejs"
+					target="_blank"
+					class="underline duration-300 hover:text-poqir-100"
+					>Shim Sangmin</a
+				>
+			</p>
+		</footer>
+
+		<!-- Script for TailwindCSS -->
+		<script>
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							poqir: {
+								50: '#ebf2fb',
+								100: '#c2d6f2',
+								200: '#a4c2ec',
+								300: '#7ba7e3',
+								400: '#6195dd',
+								500: '#3a7bd5',
+								600: '#3570c2',
+								700: '#295797',
+								800: '#204475',
+								900: '#183459',
+							},
+						},
+					},
+				},
+			};
+		</script>
+
+		<!-- Script for QRCode -->
+		<script src="./QRCodeGenerator/qrcode.min.js"></script>
+
+		<!-- Script for Function Web -->
+		<script src="./js/script.js"></script>
+	</body>
 </html>
